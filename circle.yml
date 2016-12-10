@@ -1,0 +1,27 @@
+machine:
+  ruby:
+    version: 1.9.3
+
+  environment:
+    RUBY_VERSIONS: 1.9.3
+
+dependencies:
+  override:
+    - rvm get head
+    - rvm install $RUBY_VERSIONS
+    - rvm $RUBY_VERSIONS --verbose do gem install bundler
+    - rvm $RUBY_VERSIONS --verbose do bundle install
+
+test:
+  override:
+    - echo "ignore for now"
+
+
+deployment:
+  release:
+    tag: /v[0-9]+(\.[0-9]+)*/
+    owner: phuonghuynh
+    commands:
+      - echo "--\n:rubygems_api_key: ${RUBYGEMS_API_KEY}" > ~/.gem/credentials
+      - gem build *.gemspec
+      - gem push *.gem
