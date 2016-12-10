@@ -22,6 +22,7 @@ deployment:
     tag: /v[0-9]+(\.[0-9]+)*/
     owner: phuonghuynh
     commands:
-      - echo '--\n:rubygems_api_key: ${RUBYGEMS_API_KEY}' > ~/.gem/credentials
+      - |
+        echo "--\n:rubygems_api_key: ${RUBYGEMS_API_KEY}" > ~/.gem/credentials
       - gem build *.gemspec
       - gem push *.gem
